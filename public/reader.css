@@ -43,7 +43,7 @@ img {
   width: 100%;
   height: auto;
   aspect-ratio: 16 / 9;
-  max-height: max(150px, calc(100svh - 174px));
+  max-height: max(150px, calc(100svh - 234px));
   object-fit: contain;
 }
 
@@ -70,6 +70,7 @@ button {
 
 #back { justify-self: end; }
 #next { justify-self: start; }
+#playback { grid-column: 1 / -1; justify-self: center; }
 
 button:hover:enabled { background: #ffeac1; }
 button:focus-visible { outline: 2px solid #fff; outline-offset: 4px; }
