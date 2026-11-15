@@ -1,4 +1,5 @@
-const pageCount = 26;
+const storyPageCount = 26;
+const pageCount = storyPageCount + 1;
 const slideDurations = new Map([
   [1, 10_000],
   [2, 10_000],
@@ -6,6 +7,7 @@ const slideDurations = new Map([
   [12, 45_000],
 ]);
 const slide = document.querySelector('#slide');
+const websitePage = document.querySelector('#website-page');
 const back = document.querySelector('#back');
 const next = document.querySelector('#next');
 const progress = document.querySelector('#progress');
@@ -19,7 +21,7 @@ function slidePath(number) {
 }
 
 function preloadNextPage() {
-  if (page < pageCount) {
+  if (page < storyPageCount) {
     upcomingPage = new Image();
     upcomingPage.src = slidePath(page + 1);
   }
@@ -37,15 +39,9 @@ function stopPlayback() {
 
 function scheduleAdvance() {
   clearTimeout(playbackTimer);
-  const defaultDuration = page >= 13 && page <= pageCount - 3 ? 40_000 : 30_000;
+  const defaultDuration = page >= 13 && page <= storyPageCount - 3 ? 40_000 : 30_000;
   const slideDuration = slideDurations.get(page) ?? defaultDuration;
-  playbackTimer = setTimeout(() => {
-    if (page === pageCount) {
-      stopPlayback();
-      return;
-    }
-    turnPage(1);
-  }, slideDuration);
+  playbackTimer = setTimeout(() => turnPage(1), slideDuration);
 }
 
 function turnPage(offset) {
@@ -55,14 +51,21 @@ function turnPage(offset) {
   }
 
   page = target;
-  slide.src = slidePath(page);
-  slide.alt = 'Storybook page ' + page;
+  const isWebsitePage = page === pageCount;
+  slide.hidden = isWebsitePage;
+  websitePage.hidden = !isWebsitePage;
+  if (!isWebsitePage) {
+    slide.src = slidePath(page);
+    slide.alt = 'Storybook page ' + page;
+  }
   progress.textContent = 'Page ' + page + ' of ' + pageCount;
   back.disabled = page === 1;
   next.disabled = page === pageCount;
   preloadNextPage();
 
-  if (playbackTimer === undefined) {
+  if (isWebsitePage) {
+    stopPlayback();
+  } else if (playbackTimer === undefined) {
     showPlayButton();
   } else {
     scheduleAdvance();
