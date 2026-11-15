@@ -49,11 +49,34 @@ figure {
 
 #website-page:not([hidden]) {
   display: grid;
-  place-items: center;
+  justify-items: center;
+  align-content: center;
+  gap: 20px;
   box-sizing: border-box;
   min-height: clamp(190px, 55svh, 420px);
-  padding: 20px;
+  padding: clamp(18px, 4vw, 32px);
   background: radial-gradient(ellipse at center, #285141, #0d221c 85%);
+}
+
+.closing-note {
+  max-width: 52ch;
+  text-align: center;
+  font-size: clamp(1rem, 2.5vw, 1.2rem);
+  line-height: 1.5;
+}
+
+.closing-note p {
+  margin: 0;
+}
+
+.closing-note p + p {
+  margin-top: .75em;
+}
+
+.closing-links {
+  display: grid;
+  justify-items: center;
+  gap: 14px;
 }
 
 #website-page a {
@@ -68,10 +91,18 @@ figure {
 
 #website-page img {
   display: block;
-  width: clamp(94px, 24svh, 205px);
+  width: clamp(84px, 15svh, 136px);
   max-width: 100%;
   height: auto;
   border-radius: 12px;
+}
+
+#website-page .tester-link {
+  padding: .5em .9em;
+  border-radius: 7px;
+  background: #f8daa2;
+  color: #2c1a10;
+  font: 600 1rem system-ui, sans-serif;
 }
 
 #website-page a:focus-visible {
