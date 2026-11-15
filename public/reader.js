@@ -1,9 +1,9 @@
 const pageCount = 26;
-const defaultSlideDuration = 30_000;
 const slideDurations = new Map([
   [1, 10_000],
   [2, 10_000],
   [9, 45_000],
+  [12, 45_000],
 ]);
 const slide = document.querySelector('#slide');
 const back = document.querySelector('#back');
@@ -37,7 +37,8 @@ function stopPlayback() {
 
 function scheduleAdvance() {
   clearTimeout(playbackTimer);
-  const slideDuration = slideDurations.get(page) ?? defaultSlideDuration;
+  const defaultDuration = page >= 13 && page <= pageCount - 3 ? 40_000 : 30_000;
+  const slideDuration = slideDurations.get(page) ?? defaultDuration;
   playbackTimer = setTimeout(() => {
     if (page === pageCount) {
       stopPlayback();
